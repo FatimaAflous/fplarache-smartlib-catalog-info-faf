@@ -1,7 +1,7 @@
 variable "aws_region" {
  default = "eu-north-1"
 }
-variable "ecr_repository_name"{
+variable "aws_ecr_repository_name"{
 default = "dev-fplarache-smartlib-catalog-repo-faf"
 }
 variable "ecs_cluster_name"{
