@@ -10,7 +10,7 @@ resource "aws_ecr_repository" "catalog_repo" {
 
 // Création d’un cluster ECS
 resource "aws_ecs_cluster" "catalog_cluster" {
-    name = var.ecr_cluster_name
+    name = var.ecs_cluster_name
 }
 
 // Création de la task definition ECS
@@ -36,8 +36,8 @@ resource "aws_ecs_task_definition" "catalog_task" {
 
 // Création du service ECS
 resource "aws_ecs_service" "catalog_service" {
-    name     = var.aws_ecs_service_name
-    cluster  = aws_ecs_cluster._cluster.id
+    name     = var.ecs_service_name
+    cluster  = aws_ecs_cluster.catalog_cluster.id
     task_definition = aws_ecs_task_definition.catalog_task.arn
     launch_type  = "FARGATE"
 
@@ -50,9 +50,9 @@ resource "aws_ecs_service" "catalog_service" {
 
 //Rôle IAM pour ECS
 resource "aws_iam_role" "ecs_task_execution" {
-    name = "ecsTaskExecutionRole"
+    name = "ecsTaskExecutionNewRole"
 
-    assume_role_policy = jsoncode({
+    assume_role_policy = jsonencode({
         Version="2012-10-17"
         Statement = [
             {
